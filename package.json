@@ -1,0 +1,38 @@
+{
+  "name": "rpn-calculator-node",
+  "version": "1.0.0",
+  "description": "Node.JS app to calculate arithmetic using Reverse Polish notation",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node --experimental-specifier-resolution=node ./index.js",
+    "test": "jest --coverage",
+    "lint": "eslint . --ext .js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewbrooke/rpn-calculator-node.git"
+  },
+  "author": "Andrew Brooke <andrewbrooke15@gmail.com> (https://github.com/andrewbrooke)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andrewbrooke/rpn-calculator-node/issues"
+  },
+  "homepage": "https://github.com/andrewbrooke/rpn-calculator-node#readme",
+  "babel": {
+    "env": {
+      "test": {
+        "plugins": [
+          "@babel/plugin-transform-modules-commonjs"
+        ]
+      }
+    }
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.18.0",
+    "@faker-js/faker": "^6.3.1",
+    "eslint": "^8.16.0",
+    "eslint-plugin-jest": "^26.2.2",
+    "jest": "^28.1.0"
+  }
+}
