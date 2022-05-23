@@ -34,5 +34,8 @@
     "eslint": "^8.16.0",
     "eslint-plugin-jest": "^26.2.2",
     "jest": "^28.1.0"
+  },
+  "dependencies": {
+    "mathjs": "^10.5.3"
   }
 }
