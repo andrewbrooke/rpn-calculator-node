@@ -1,3 +1,6 @@
+import Debug from 'debug';
+const debug = Debug('rpn-calculator-node:handlers:arithmetic');
+
 import { create, all } from 'mathjs';
 const math = create(all);
 
@@ -15,21 +18,29 @@ const stack = [];
  * Returns the current stack
  * @returns {Array} in memory stack
  */
-export const getStack = () => stack;
+export const getStack = () => {
+    debug('Retrieving stack');
+    return stack;
+};
 
 /**
  * Clears the current stack
  * @returns {Array} the stack at the time of calling
  */
-export const clearStack = () => stack.splice(0, stack.length);
+export const clearStack = () => {
+    debug('Clearing stack');
+    return stack.splice(0, stack.length);
+};
 
 /**
  * Takes a string representing a Reverse Polish notation arithmetic expression and returns the resulting final element in the stack after evaluating the expression.
  * Modifies the stack variable in memory to hold the result for further expressions provided by the user.
- * @param {string} expression 
+ * @param {string} expression
  * @returns {string} String representation of the result (final stack element)
  */
 export const handleExpression = (expression) => {
+    debug(`Handling expression: ${expression}, current stack: ${stack}`);
+
     // Iterate tokens provided by the user
     const tokens = expression.trim().split(/\s+/);
     while (tokens.length) {
@@ -48,5 +59,9 @@ export const handleExpression = (expression) => {
         }
     }
 
-    return math.format(stack[stack.length - 1], { precision: 15 }); // Use mathjs when formatting output to prevent rounding errors
+    const result = math.format(stack[stack.length - 1], { precision: 15 }); // Use mathjs when formatting output to prevent rounding errors
+
+    debug(`Returning result: ${result}, new stack: ${stack}`);
+
+    return result;
 };
