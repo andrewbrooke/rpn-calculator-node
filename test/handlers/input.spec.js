@@ -1,5 +1,5 @@
-import { handleLine } from '../../handlers/input';
-import * as arithmetic from '../../handlers/arithmetic';
+import * as input from '#handlers/input';
+import * as arithmetic from '#handlers/arithmetic';
 
 describe('Input Handler', () => {
     const mockReadline = () => {
@@ -9,14 +9,21 @@ describe('Input Handler', () => {
         return rl;
     };
 
+    let logSpy;
+
     beforeEach(() => {
         arithmetic.clearStack();
+        logSpy = jest.spyOn(console, 'log');
+    });
+
+    afterEach(() => {
+        logSpy.mockClear();
     });
 
     test('Should prompt the user when an empty line is received', () => {
         const rl = mockReadline();
 
-        const result = handleLine(rl, '');
+        const result = input.handleLine(rl, '');
 
         expect(rl.prompt).toHaveBeenCalled();
         expect(arithmetic.getStack()).toStrictEqual([]);
@@ -26,7 +33,7 @@ describe('Input Handler', () => {
     test('Should fire close event when "q" is received', () => {
         const rl = mockReadline();
 
-        const result = handleLine(rl, 'q');
+        const result = input.handleLine(rl, 'q');
 
         expect(rl.close).toHaveBeenCalled();
         expect(arithmetic.getStack()).toStrictEqual([]);
@@ -36,7 +43,7 @@ describe('Input Handler', () => {
     test('Should fire close event when "quit" is received', () => {
         const rl = mockReadline();
 
-        const result = handleLine(rl, 'quit');
+        const result = input.handleLine(rl, 'quit');
 
         expect(rl.close).toHaveBeenCalled();
         expect(arithmetic.getStack()).toStrictEqual([]);
@@ -47,7 +54,7 @@ describe('Input Handler', () => {
         const stackSpy = jest.spyOn(arithmetic, 'getStack');
         const rl = mockReadline();
 
-        const result = handleLine(rl, 's');
+        const result = input.handleLine(rl, 's');
 
         expect(rl.prompt).toHaveBeenCalled();
         expect(stackSpy).toHaveBeenCalled();
@@ -59,7 +66,7 @@ describe('Input Handler', () => {
         const stackSpy = jest.spyOn(arithmetic, 'getStack');
         const rl = mockReadline();
 
-        const result = handleLine(rl, 'stack');
+        const result = input.handleLine(rl, 'stack');
 
         expect(rl.prompt).toHaveBeenCalled();
         expect(stackSpy).toHaveBeenCalled();
@@ -71,7 +78,7 @@ describe('Input Handler', () => {
         const stackSpy = jest.spyOn(arithmetic, 'clearStack');
         const rl = mockReadline();
 
-        const result = handleLine(rl, 'c');
+        const result = input.handleLine(rl, 'c');
 
         expect(rl.prompt).toHaveBeenCalled();
         expect(stackSpy).toHaveBeenCalled();
@@ -83,7 +90,7 @@ describe('Input Handler', () => {
         const stackSpy = jest.spyOn(arithmetic, 'clearStack');
         const rl = mockReadline();
 
-        const result = handleLine(rl, 'clear');
+        const result = input.handleLine(rl, 'clear');
 
         expect(rl.prompt).toHaveBeenCalled();
         expect(stackSpy).toHaveBeenCalled();
@@ -91,10 +98,28 @@ describe('Input Handler', () => {
         expect(result).toBe(false);
     });
 
+    test('Should display help when "h" is received', () => {
+        const rl = mockReadline();
+
+        const result = input.handleLine(rl, 'h');
+
+        expect(logSpy).toHaveBeenCalledWith(input.displayHelpMessage());
+        expect(result).toBe(false);
+    });
+
+    test('Should display help when "help" is received', () => {
+        const rl = mockReadline();
+
+        const result = input.handleLine(rl, 'help');
+
+        expect(logSpy).toHaveBeenCalledWith(input.displayHelpMessage());
+        expect(result).toBe(false);
+    });
+
     test('Should return true when a valid expression is received', () => {
         const rl = mockReadline();
 
-        const result = handleLine(rl, '5 5 +');
+        const result = input.handleLine(rl, '5 5 +');
 
         expect(result).toBe(true);
     });

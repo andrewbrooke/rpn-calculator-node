@@ -10,7 +10,7 @@ export const arithmetic = {
     '+': (l, r) => math.add(l, r),
     '-': (l, r) => math.subtract(l, r),
     '*': (l, r) => math.multiply(l, r),
-    '/': (l, r) => math.divide(l, r),
+    '/': (l, r) => math.divide(l, r)
 };
 const stack = [];
 

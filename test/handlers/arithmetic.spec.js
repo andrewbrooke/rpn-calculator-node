@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { create, all } from 'mathjs';
 
-import { getStack, clearStack, handleExpression } from '../../handlers/arithmetic';
+import { getStack, clearStack, handleExpression } from '#handlers/arithmetic';
 
 describe('Arithmetic Handler', () => {
     let math;

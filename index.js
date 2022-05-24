@@ -4,8 +4,8 @@ const debug = Debug('rpn-calculator-node:index');
 import readline from 'readline/promises';
 import { stdin as input, stdout as output } from 'process';
 
-import { handleLine } from './handlers/input';
-import { handleExpression } from './handlers/arithmetic';
+import { handleLine } from '#handlers/input';
+import { handleExpression } from '#handlers/arithmetic';
 
 // Set up CLI prompt and read events
 let rl;

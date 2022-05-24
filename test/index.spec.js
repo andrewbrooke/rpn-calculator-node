@@ -2,7 +2,8 @@ import mockStdin from 'mock-stdin';
 const stdin = mockStdin.stdin();
 
 import { read, quit } from '../index.js';
-import * as arithmetic from '../handlers/arithmetic';
+import * as arithmetic from '#handlers/arithmetic';
+import * as input from '#handlers/input';
 
 describe('CLI', () => {
     let exitMock, logSpy, getStackMock;
@@ -81,6 +82,26 @@ describe('CLI', () => {
         stdin.send('clear\r');
 
         expect(arithmetic.getStack()).toStrictEqual([]);
+    });
+
+    test('Should display help when "h" is provided to stdin', () => {
+        const helpSpy = jest.spyOn(input, 'displayHelpMessage');
+        const expected = input.displayHelpMessage();
+
+        stdin.send('h\r');
+
+        expect(helpSpy).toHaveBeenCalled();
+        expect(logSpy).toHaveBeenCalledWith(expected);
+    });
+
+    test('Should display help when "help" is provided to stdin', () => {
+        const helpSpy = jest.spyOn(input, 'displayHelpMessage');
+        const expected = input.displayHelpMessage();
+
+        stdin.send('help\r');
+
+        expect(helpSpy).toHaveBeenCalled();
+        expect(logSpy).toHaveBeenCalledWith(expected);
     });
 
     test('Should log an error when an expression with an invalid RPN order is provided', () => {
